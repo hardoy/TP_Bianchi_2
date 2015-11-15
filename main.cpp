@@ -1,3 +1,9 @@
+// Algoritmos y Estructuras de Datos
+// Trabajo Práctico Número Dos
+// Alumno: Antonio Agustín Hardoy
+// Curso: K1091
+// Legajo: 156.290-3
+
 #include <iostream>
 
 using namespace std;
@@ -21,6 +27,32 @@ struct NodoRepuestos {
     Info info;
     NodoRepuestos * siguiente;
 };
+
+void InstertarOrdenado(NodoRepuestos *&, RegistroRepuestos, int);
+void ArmarArchivoOrdenado(NodoRepuestos*, FILE*, RegistroRepuestos);
+void EliminarLista(NodoRepuestos*&);
+
+int main() {
+    FILE* archivo_repuestos_desordenado = fopen("repuestos.dat", "r+b");
+    RegistroRepuestos registro_archivo;
+    int posicion = 0;
+    NodoRepuestos* lista_repuestos = NULL;
+
+    fread(&registro_archivo,sizeof(registro_archivo),1,archivo_repuestos_desordenado);
+    while ( !feof(archivo_repuestos_desordenado) ){
+        InstertarOrdenado(lista_repuestos, registro_archivo, posicion);
+        fread(&registro_archivo,sizeof(registro_archivo),1,archivo_repuestos_desordenado);
+        posicion = posicion + 1;
+    }
+
+    ArmarArchivoOrdenado(lista_repuestos, archivo_repuestos_desordenado, registro_archivo);
+
+    fclose(archivo_repuestos_desordenado);
+
+    EliminarLista(lista_repuestos);
+
+    return 0;
+}
 
 void InstertarOrdenado(NodoRepuestos *& lista, RegistroRepuestos registro_archivo, int posicion){
     NodoRepuestos * nuevo = new NodoRepuestos();
@@ -62,7 +94,7 @@ void ArmarArchivoOrdenado(NodoRepuestos* lista, FILE* archivo, RegistroRepuestos
     fclose(archivo_repuestos_ordenado);
 }
 
-void EliminarLista(NodoRepuestos*& lista) {
+void EliminarLista(NodoRepuestos*& lista){
 
     NodoRepuestos* auxiliar;
 
@@ -72,26 +104,4 @@ void EliminarLista(NodoRepuestos*& lista) {
         delete auxiliar;
     }
 
-}
-
-int main() {
-    FILE* archivo_repuestos_desordenado = fopen("repuestos.dat", "r+b");
-    RegistroRepuestos registro_archivo;
-    int posicion = 0;
-    NodoRepuestos* lista_repuestos = NULL;
-
-    fread(&registro_archivo,sizeof(registro_archivo),1,archivo_repuestos_desordenado);
-    while ( !feof(archivo_repuestos_desordenado) ){
-        InstertarOrdenado(lista_repuestos, registro_archivo, posicion);
-        fread(&registro_archivo,sizeof(registro_archivo),1,archivo_repuestos_desordenado);
-        posicion = posicion + 1;
-    }
-
-    ArmarArchivoOrdenado(lista_repuestos, archivo_repuestos_desordenado, registro_archivo);
-
-    fclose(archivo_repuestos_desordenado);
-
-    EliminarLista(lista_repuestos);
-
-    return 0;
 }
