@@ -1,0 +1,30 @@
+TP Bianchi 2
+
+# Estrategia:
+
+1. Abrir el archivo
+
+2. Leer el archivo
+
+3. Pasar el archivo a una estructura dinámica
+
+4. Ordenar la estructura
+	Por Modelo de pertenencia y código de producto
+	
+5. Escribir la estructura en un nuevo archivo
+
+6. Cerrar archivo y eliminar estructura dinámica
+
+# Enunciado
+
+Una casa de repuestos de automotor,  dispone de un archivo de productos con la siguiente información:
+1. Código de producto (8 dígitos).
+2. Modelo  de pertenencia  (2 dígitos)
+3. Cantidad en stock (8 dígitos)
+4. Fecha de ultima reposición  (ddmmaa)	
+5. Precio unitario (double)  
+6. Descripción del mismo 20 caracteres
+Se solicita hacer un programa para ordenar el archivo por Modelo de pertenencia y código de producto.
+Consideraciones a tener en cuenta.
+No se dispone  de memoria estática para guardar todo el archivo, solo 5 kbytes. 
+Trate de usar Nodos  lo más chico posible.
