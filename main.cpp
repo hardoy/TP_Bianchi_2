@@ -31,6 +31,7 @@ struct NodoRepuestos {
 void InstertarOrdenado(NodoRepuestos *&, RegistroRepuestos, int);
 void ArmarArchivoOrdenado(NodoRepuestos*, FILE*, RegistroRepuestos);
 void EliminarLista(NodoRepuestos*&);
+void MostrarArchivo();
 
 int main() {
     FILE* archivo_repuestos_desordenado = fopen("repuestos.dat", "r+b");
@@ -46,6 +47,8 @@ int main() {
     }
 
     ArmarArchivoOrdenado(lista_repuestos, archivo_repuestos_desordenado, registro_archivo);
+
+    MostrarArchivo();
 
     fclose(archivo_repuestos_desordenado);
 
@@ -94,6 +97,33 @@ void ArmarArchivoOrdenado(NodoRepuestos* lista, FILE* archivo, RegistroRepuestos
     fclose(archivo_repuestos_ordenado);
 }
 
+void MostrarArchivo(){
+    FILE* archivo_repuestos_ordenado = fopen("repuestos_ordenado.dat", "r+b");
+
+    RegistroRepuestos registro_archivo;
+
+        printf("%-20s ", "Código");
+        printf("%-21s ", "Modelo");
+        printf("%-15s ", "Precio");
+        printf("%-20s ", "Descripcion");
+        printf("%-10s ", "Fecha");
+        printf("%-s \n\n", "Stock");
+
+    fread(&registro_archivo,sizeof(registro_archivo),1,archivo_repuestos_ordenado);
+    while ( !feof(archivo_repuestos_ordenado) ){
+
+        printf("%-20d ", registro_archivo.codigo_producto);
+        printf("%-21d ", registro_archivo.modelo_pertenencia);
+        printf("%-15g ", registro_archivo.precio_unitario);
+        printf("%-20s ", registro_archivo.descripcion);
+        printf("%-10d ", registro_archivo.fecha_ultima_reposicion);
+        printf("%-d \n", registro_archivo.stock);
+        fread(&registro_archivo,sizeof(registro_archivo),1,archivo_repuestos_ordenado);
+    }
+    fclose(archivo_repuestos_ordenado);
+}
+
+
 void EliminarLista(NodoRepuestos*& lista){
 
     NodoRepuestos* auxiliar;
@@ -103,5 +133,4 @@ void EliminarLista(NodoRepuestos*& lista){
         lista = lista->siguiente;
         delete auxiliar;
     }
-
 }
